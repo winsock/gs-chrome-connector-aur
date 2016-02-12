@@ -1,6 +1,6 @@
 # Maintainer: Andrew Querol <andrew@querol.me>
 
-pkgname=gs-chrome-connector-git # '-bzr', '-git', '-hg' or '-svn'
+pkgname=gs-chrome-connector-git
 pkgver=5.c2b35ef
 pkgrel=1
 pkgdesc="Native connector for extensions.gnome.org using chrome-gnome-shell"
@@ -10,17 +10,18 @@ license=('GPL')
 depends=('gnome-shell' 'python2')
 makedepends=('git' 'cmake')
 provides=("${pkgname%-git}")
-source=('${pkgname%-git}::git+https://github.com/nE0sIghT/chrome-gnome-shell.git')
+source=("${pkgname%-git}::git+https://github.com/nE0sIghT/chrome-gnome-shell")
 md5sums=('SKIP')
+install=gs-chrome-connector.install
 
 pkgver() {
 	cd "$srcdir/${pkgname%-git}"
-	printf "%s.%s" "${$pkgver%.*}" "$(git rev-parse --short HEAD)"
+	printf "%s.%s" "${pkgver%.*}" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
 	cd "$srcdir/${pkgname%-git}"
-	mkdir 'build'
+	mkdir -p 'build'
 }
 
 build() {
@@ -29,6 +30,6 @@ build() {
 }
 
 package() {
-	cd "$srcdir/${pkgname%-git}"
+	cd "$srcdir/${pkgname%-git}/build"
 	make DESTDIR="$pkgdir/" install
 }
