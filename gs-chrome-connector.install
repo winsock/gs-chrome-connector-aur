@@ -1,0 +1,7 @@
+post_install() {
+	echo
+	elog "You must install GNOME Shell integration extension from"
+	elog "Google Chrome store: https://goo.gl/JHCUS9 to work with"
+	elog "GNOME Shell extensions repository at https://extensions.gnome.org"
+	echo
+}
